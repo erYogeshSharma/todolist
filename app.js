@@ -12,7 +12,7 @@ dotenv.config();
  
 
 const app = express();
-const url = process.env.MONGO_URL;
+const url = "mongodb://yogi:golu1234@cluster0-shard-00-00.7xsyb.mongodb.net:27017,cluster0-shard-00-01.7xsyb.mongodb.net:27017,cluster0-shard-00-02.7xsyb.mongodb.net:27017/todolistDB?ssl=true&replicaSet=atlas-begpc2-shard-0&authSource=admin&retryWrites=true&w=majority";
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
