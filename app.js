@@ -4,15 +4,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const dotenv = require("dotenv");
+
+
+
+dotenv.config();
  
 
 const app = express();
-
+const url = process.env.MONGO_URL;
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-mongoose.connect('mongodb://yogi:golu1234@cluster0-shard-00-00.7xsyb.mongodb.net:27017,cluster0-shard-00-01.7xsyb.mongodb.net:27017,cluster0-shard-00-02.7xsyb.mongodb.net:27017/todolistDB?ssl=true&replicaSet=atlas-begpc2-shard-0&authSource=admin&retryWrites=true&w=majority',{useNewUrlParser:true, useUnifiedTopology: true} );
+mongoose.connect(url,{useNewUrlParser:true, useUnifiedTopology: true} );
 
 const todolistSchema = new mongoose.Schema({
 
@@ -56,7 +61,7 @@ app.get("/", function(req, res) {
     res.redirect("/");  
     }
     else{
-      res.render("list", {listTitle: "today", newListItems: foundItems  });
+      res.render("list", {listTitle: "Today", newListItems: foundItems  });
  
     }
   });
@@ -74,7 +79,7 @@ app.post("/", function(req, res){
     listItem: itemName
   });
 
-  if(newItem === "today"){
+  if(newItem === "Today"){
     
     item.save();
     res.redirect("/");
@@ -102,7 +107,7 @@ app.post("/", function(req, res){
     
   
 
-  if(listname === "today"){
+  if(listname === "Today"){
     Item.deleteOne({ _id:Citem },function(err){
       if(err){
         console.log(err);
